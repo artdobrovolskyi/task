@@ -11,5 +11,6 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
-Route::get('/book', 'PagesController@book');
+Route::get('/', 'PagesController@book');
+
+Route::resource('posts', 'PostsController');

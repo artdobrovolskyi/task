@@ -1,13 +1,9 @@
-<?php
-?>
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{config('app.name', 'task')}}</title>
-    </head>
-    <body>
+@extends('layouts.app')
 
-    </body>
-</html>
+@section('content')
+    <div class="jumbotron center">
+        <h1 class="text-center">Welcome to Restaurant Guest Book</h1>
+        <p class="text-center">In this Guest Book, you can read the reviews of our
+            visitors about our institution and leave your</p>
+    </div>
+@endsection
