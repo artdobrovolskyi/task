@@ -14,3 +14,7 @@
 Route::get('/', 'PagesController@book');
 
 Route::resource('posts', 'PostsController');
+
+Auth::routes();
+
+Route::get('/userPage', 'HomeController@index');
