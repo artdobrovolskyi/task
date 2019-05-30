@@ -20,7 +20,14 @@
             <div class="jumbotron">
                 <h3><a href="/posts/{{$post->id}}">{{$post->title}}</a></h3>
                 <p>{{$post->body}}</p>
-                <small>{{$post->created_at}}</small>
+                <small>{{$post->created_at}} by {{$post->user->name}}</small>
+                @if ($user->is_admin === 1)
+                    <div class="text-right">
+                        {{Form::open(['action' => ['PostsController@edit', $post->id], 'method' => 'GET', 'class' => 'pull-right'])}}
+                        {{Form::submit('Blocked User', ['class' => 'btn btn-outline-danger'])}}
+                        {{Form::close()}}
+                    </div>
+                @endif
             </div>
         @endforeach
         {{$posts->links()}}

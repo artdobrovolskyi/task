@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Post;
 
 class PostsController extends Controller
 {
+
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +27,9 @@ class PostsController extends Controller
     public function index()
     {
     	$posts = Post::orderBy('created_at','desc')->paginate(15);
-        return view('/posts/index')->with('posts', $posts);
+		$user_id = auth()->user()->id;
+		$user = User::find($user_id);
+        return view('/posts/index')->with(['posts' => $posts, 'user' => $user]);
     }
 
     /**
@@ -59,7 +73,9 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return view('/posts/show')->with('post', $post);
+        $user_id = auth()->user()->id;
+		$user = User::find($user_id);
+        return view('/posts/show')->with(['post' => $post, 'user' => $user]);
     }
 
     /**
@@ -70,8 +86,12 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+        $post = Post::find($id);
+        $user = User::find($post->user_id);
+        $user->blocked = 'true';
+        $user->save();
+		return redirect('/posts');
+	}
 
     /**
      * Update the specified resource in storage.
